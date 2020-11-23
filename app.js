@@ -54,40 +54,56 @@
 // Scroll to section on link click
 
 // Set sections as active
-const UL=document.querySelector('#navbar__list');
-const sections=document.querySelectorAll('section');
+
+const UL = document.querySelector('#navbar__list');
+console.log("UL", UL)
+
+const sections = document.querySelectorAll('section');
+console.log("sections", sections)
+
 sections.forEach(section => {
-    const lis=document.createElement('li');
-    
-    const links=document.createElement('a');
-    links.href=section.id;
-    console.log(links.href);
-    const text=section.getAttribute('data-nav');
-    links.textContent=text;
-    links.classList.add('menu__link');
-    lis.appendChild(links);
-    UL.appendChild(lis);
-    // links.addEventListener('click',()=>{
-    //   const scroll=document.getElementsByTagName(section.getAttribute('data-nav'));
-    //   scroll.scrollIntoView({behavior:'smooth',block:'start'});
-    // })
-    
+  const lis = document.createElement('li');
+  const links = document.createElement('a');
+  links.classList.add("link")
+  const text = section.getAttribute('data-nav');
+  links.textContent = text;
+  links.classList.add('menu__link');
+  lis.appendChild(links);
+  UL.appendChild(lis);
+  
+})
+
+let links = document.querySelectorAll(".link")
+//console.log("links", links)
+
+links.forEach((item, index) => {
+  item.addEventListener("click", (e) => {
+    //console.log(sections[index])
+    document.querySelectorAll(".active").forEach(item => {
+      item.classList.toggle("active")
+    })
+
+    links[index].classList.add("active")
+    sections[index].scrollIntoView({
+      behavior: 'smooth'
+    });
+  })
+
+})
+
+
+let indexOfSection = 0;
+
+document.addEventListener('wheel', e => {
+  if (e.wheelDeltaY > 0 && indexOfSection - 1 >= 0) {
+    // wheel up
+    sections[indexOfSection].className = '';
+    indexOfSection--;
+    sections[indexOfSection].className = 'your-active-class';
+  } else if (e.wheelDeltaY < 0 && indexOfSection + 1 < sections.length) {
+    // wheel down
+    sections[indexOfSection].className = '';
+    indexOfSection++;
+    sections[indexOfSection].className = 'your-active-class';
+  }
 });
-  // links.addEventLinster('click',()=>{
-  //   let dataNavs=document.getElementById
-  // })
-
-
-// document.body.addEventListener('click', e=> {console.log(e.target)})
-// links.addEventListener('click',function(){
-//     scrollTo
-// })
-// for (var i = 0; i < sections.length; i++) {
-//     sections[i].addEventListener("click", function() {
-//       var current = document.getElementsByClassName("your-active-class");
-//       current[0].className = current[0].className.replace(" your-active-class", "");
-//       this.className += " your-active-class";
-//     });
-//   }
-
- 
